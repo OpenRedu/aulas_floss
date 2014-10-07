@@ -1,0 +1,901 @@
+% Author: Fernando Castor. You can contact the author at castor at the
+% cin.ufpe.br domain.
+
+%THIS WORK IS LICENSED UNDER A CREATIVE COMMONS
+%ATTRIBUTION-NONCOMMERCIAL-SHAREALIKE 3.0 UNPORTED LICENSE. THE WORK
+%(AS DEFINED BY THE LICENSE) IS PROVIDED UNDER THE TERMS OF THIS
+%CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS
+%PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE
+%WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS
+%PROHIBITED.  BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU
+%ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE
+%EXTENT THIS LICENSE MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR
+%GRANTS YOU THE RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR
+%ACCEPTANCE OF SUCH TERMS AND CONDITIONS.  PLEASE REFER TO THE
+%DESCRIPTION OF THE LICENSE
+%(http://creativecommons.org/licenses/by-nc-sa/3.0/) AND TO ITS FULL
+%TEXT (http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode) FOR
+%MORE INFORMATION.
+
+% THIS WORK USES A NUMBER OF IMAGES FROM THIRD-PARTIES. THE COPYRIGHT
+% OF THESE IMAGES REMAIN WITH THEIR OWNERS, WHEN APPLICABLE.
+
+% THIS LICENSE APPLIES SOLELY TO THE FILE 05_praticas_tabus_gerenciamento.tex.
+
+\documentclass[xcolor=dvipsnames]{beamer}
+\usecolortheme[named=Brown]{structure} 
+%\usetheme{Rochester}
+\usetheme{Frankfurt}
+
+\usepackage{booktabs}
+\usepackage{ulem}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage[latin1]{inputenc}   % para os acentos
+\usepackage[brazil]{babel}      % para hifeniza\c{c}\~{a}o
+\usepackage{color}
+
+\definecolor{lightgrey}{rgb}{0.8, 0.8, 0.8}
+\newcommand{\shd}[1]{\colorbox{lightgrey}{#1}}
+
+\newcommand{\tblue}[1]{\textcolor{blue}{#1}}
+\newcommand{\tred}[1]{\textcolor{red}{#1}}
+\newcommand{\tgreen}[1]{\textcolor{green}{#1}}
+\newcommand{\tyellow}[1]{\textcolor{yellow}{#1}}
+
+
+\newcommand{\byellow}[1]{\colorbox{yellow}{#1}}
+\newcommand{\bred}[1]{\colorbox{red}{\textcolor{white}{#1}}}
+\newcommand{\bgreen}[1]{\colorbox{green}{#1}}
+
+\definecolor{lightestgrey}{rgb}{0.91, 0.91, 0.91}
+\newcommand{\lshd}[1]{\colorbox{lightestgrey}{#1}}
+
+\title{Desenvolvimento de FLOSS: Práticas e Tabus}
+\author{Fernando Castor}
+\pgfdeclareimage[height=0.4cm]{cc}{license}
+
+\institute{Centro de Informática -- Universidade Federal de Pernambuco \\[2.0cm] {\tiny Alguns direitos reservados }\pgfuseimage{cc} }
+\date{}
+\pgfdeclareimage[height=1.0cm]{logo}{ines}
+\pgfdeclareimage[height=0.8cm]{logo2}{spg}
+\pgfdeclareimage[height=0.8cm]{logo3}{cin}
+
+\logo{\pgfuseimage{logo3}\hspace{0.1cm}\pgfuseimage{logo}\hspace{0.1cm}\pgfuseimage{logo2} }
+
+\begin{document}
+
+\section{Introdução}
+\subsection{Introdução}
+
+\frame{\titlepage}
+
+
+\begin{frame}
+	\frametitle{O Processo de Desenvolvimento de FLOSS}
+    \begin{enumerate}
+      \item Práticas \vspace{0.2cm}
+      \item \textit{Forks} \vspace{0.2cm}
+      \item Tabus \vspace{0.2cm}
+      \item Modelos de Gerenciamento \vspace{0.2cm}
+      \item Ferramentas
+    \end{enumerate}
+\end{frame}
+
+
+\section{Práticas}
+\subsection{Práticas}
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Práticas do Desenvolvimento de Software de Código Aberto}
+\end{center}
+\end{frame}
+
+
+% praticas
+  % A Leis de Linus vs. O homem-mês mítico?  
+  % Escolher uma licença livre ou de código aberto é fundamental (falar sobre como isso afeta questões ligadas
+  % a a motivação de quem trabalha no projeto). 
+  
+% Impacto positivo de cada uma...
+
+% Se essas práticas são tão boas, por que algumas empresas com práticas diametralmente opostas funcionam bem?
+%http://wallpaperstag.net/view-apple_macintosh_pear_logo-1280x1024.html
+% pear.jpg
+% Não consegui descobrir informações sobre o copyright da figura.
+
+% Modelos de gerenciamento
+% Forkability e porque ditadores devem sempre ser benevolentes
+%(incluir fotos de alguns ditadores benevolentes conhecidos)
+% Aquí entra o slide com o garfo
+
+% Tabus
+% You Don't Fork About the Fight Club
+% Motivação?
+
+% Ownership customs (ver Homesteading the Noosphere)
+
+\begin{frame}
+	\frametitle{Revisando: Algumas Práticas do Desenvolvimento \textit{Open Source}}
+    \begin{enumerate}
+      \item Desenvolvimento distribuído \vspace{0.2cm}
+      \item Software disponível cedo e frequentemente \vspace{0.2cm}
+      \item Depuração e testes em massa, com usuários envolvidos no desenvolvimento \vspace{0.2cm}
+      \item Meritocracia \vspace{0.2cm}
+      \item Sem uma hierarquia rígida e sem coerção
+      %Mas com um líder, pelo menos no início.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Desenvolvimento Distribuído}
+    \textbf{Premissa}: mecanismo de comunicação \tred{muitos-para-muitos} tão bom quanto a Internet
+    % Telefone não é suficiente para dar suporte ao desenvolvimento distribuído, por dois 
+    % motivos. Primeiro, porque é obrigatoriamente síncrono, o que significa que as duas 
+    % partes precisam concordar em se comunicar ao mesmo tempo. Além disso, de forma geral,
+    % telefone permite comunicação entre duas partes e isso não é suficiente para o 
+    % desenvolvimento distribuído. Por outro lado, comunicação entre várias partes é fácil 
+    % quando se emprega ferramentas como email, IRC e Skype. 
+    \vspace{0.2cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.35]{distribuicao.jpg}\\[0.1cm]
+	%Distribuição geográfica dos desenvolvedores do Linux.
+	%http://www.ohloh.net/p/linux/map
+	%Copyright pertence a Ohloh
+	%Ohloh grants you a royalty-free, fully paid-up, worldwide, non-transferable, non-exclusive, limited license to use, reproduce, modify and publicly display the ?Ohloh Materials? (?Materials?) on Ohloh?s website in and/or on any of your online publications and/or web pages, provided that you agree to attribute Ohloh as the source of any ?Materials.? 
+	\end{center}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Software disponível cedo e frequentemente}
+    {\LARGE E ouvindo o \textit{feedback} dos usuários! }\pause
+\\[0.3cm]
+Cuidado com as expectativas e com o {\bf cedo demais}!
+\begin{columns}
+\begin{column}[c]{4.5cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.7]{touchpad.jpg}\\[0.1cm]
+	\end{center}
+	\end{figure}
+    %O HP TouchPad tinha potencial para disputar com o iPad. Tinha um diferencial com relação
+    %a outros tablets: usava um sistema operacional próprio, o WebOS. De acordo com reviews 
+    %iniciais, esse SO proporcionava uma boa experiência de uso. Entretanto, o projeto foi
+    %apressado, o lançamento ocorreu cedo demais e o tablet naufragou. O hardware era pesado 
+    %demais e não funcionava bem com o software. Já este último não foi polido tanto quanto 
+    %deveria. A fabricação do dispositivo foi interrompida poucos meses depois do seu lançamento. 
+    %This file is licensed under the Creative Commons Attribution-Share Alike 2.0 Generic license.
+    %http://en.wikipedia.org/wiki/File:HP_TouchPad.jpg
+    %Autor: Tom Raftery
+\end{column}
+\begin{column}[c]{4.5cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.35]{ubuntu.png}\\[0.1cm]
+	\end{center}
+	\end{figure}
+	%Ubuntu 11.10, Oneiric Ocelot
+	%http://en.wikipedia.org/wiki/File:Ubuntu_11.10_Final.png
+    % Screenshot by Kenny Strawn, Lifemaestro and KiloByte of the English Wikipedia   
+    % Alguns consideram que o Ubuntu 10.10 foi lançado mais cedo do que deveria (a data foi
+    % fixada em 10.10.10). Especula-se que os bugs desse release, combinados com as 
+    % peculiaridades da interface Unity afastaram vários usuários do SO (eu incluso!), que
+    % migraram em grande parte para o Linux Mint.
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Envolvimento dos usuários no desenvolvimento}
+    \begin{block}{A importância de \textit{Feedback}}
+    \begin{enumerate}
+      \item {\bf Qualquer} projeto pode beneficiar-se\vspace{0.1cm}
+      % mesmo que não seja de código aberto/livre
+      \item Bugs apontados antes do lançamento\vspace{0.1cm}
+      \item Problemas de usabilidade corrigidos\vspace{0.1cm}
+      \item Quanto mais usuários, melhor para o projeto\vspace{0.1cm}
+    \end{enumerate}
+    \end{block}\pause
+
+    \begin{block}{A diferença (o diferencial?) de FLOSS}
+    \begin{enumerate}
+      \item Usuários \bgreen{cientes sobre o desenvolvimento}\vspace{0.1cm}
+      \item \textit{Bug reports} mais informativos\vspace{0.1cm}
+      %Como o usuário entende sobre um pouco sobre o sistema ou sobre desenvolvimento, em geral, 
+      %os bug reports fornecem informações mais úteis sobre como reproduzir o bug e sobre 
+      %potenciais causas para o problema.
+      \item O usuário não \tred{\bf precisa} ser um desenvolvedor!
+      \begin{itemize}
+      \item Mas deve {\bf pensar} como um!
+      \end{itemize}
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+%	\frametitle{Um exemplo do Firefox}
+    \vspace{0.2cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.41]{bug_firefox.jpg}\\[0.1cm]
+	%Um bug report bem feito indicando um problema no Firefox.
+    %https://bugzilla.mozilla.org/show_bug.cgi?id=599581#c0
+    %Texto extraído das diretrizes legais do sítio da Mozilla Foundation: "...the downloading, copying and use of the materials you make available will not infringe the proprietary rights, including but not limited to intellectual property rights, of any third party."
+	\end{center}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+%	\frametitle{Um exemplo do Firefox}
+    \vspace{0.2cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.41]{bug_firefox2.jpg}\\[0.1cm]
+	%Um bug report bem feito indicando um problema no Firefox.
+    %https://bugzilla.mozilla.org/show_bug.cgi?id=599581#c0
+    %Mozilla website content (i.e. text and pictures, not look and feel) is generally licensed under Creative Commons Attribution Share-Alike (CC-SA) licenses. User-generated content, such as comments on our blog posts, are also generally made available under CC-SA, but different Mozilla websites (such as addons.mozilla.org) may allow users to choose other licenses for content that they upload to our sites.
+	\end{center}
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Depuração e Testes em Massa}
+	\vspace{0.1cm}
+	{\Large A Lei de Linus: }\\[0.5cm]
+{\LARGE \textit{``Given Enough Eyeballs, Every Bug is Shallow''}}
+\begin{columns}
+\begin{column}[l]{4cm}	
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.35]{beholder.jpg}\vspace{0.2cm}
+    % http://www.wizards.com/dnd/images/leof_gallery/86716.jpg
+    % Copyright Wizards of the Cost. 
+    % Site Content and the Services are the proprietary property of Wizards or its licensors or other Users, and are protected by copyright, trademark, and other intellectual property laws. You are granted a limited, non-sublicenseable license to access and use the Sites and Services, and to electronically copy (except where specified as prohibited) and print to hard copy portions of Site Content and/or Services for your personal, noncommercial use only; provided, that you preserve any copyright, trademark or other similar notices contained in or associated with such Site Content or Services. Such license is subject to these TOU and does not include: (a) any resale or commercial use of the Sites or any Site Content therein and/or Services; (b) the collection and use of any product or service listings, pictures or descriptions; (c) the distribution (electronic or otherwise), public performance, or public display of any Site Content or Services; (d) modifying or otherwise making any derivative uses of the Sites and Site Content or Services, or any portion thereof; (e) use of any data mining, robots or similar data gathering or extraction methods; (f) downloading (other than the page caching) of any portion of the Sites, any Site Content, the Services or any information contained therein, except as expressly permitted on the Sites or pursuant to the Services; or (g) any use of the Sites or Site Content or Services other than for its intended purpose. Any use of the Sites or Site Content or Services other than as specifically authorized herein, without the prior written permission of Wizards, is strictly prohibited and will terminate the license granted herein. This license is revocable at any time.
+     
+    % Em outras palavras, se quiser ver a imagem, é necessário obtê-la a partir do endereço acima.
+	\end{center}
+	\end{figure}
+\end{column}
+\pause
+\begin{column}[c]{6cm}
+	\begin{block}{Isso significa que}
+    \begin{enumerate}
+      \item se os usuários ajudam nos \tred{testes}\vspace{0.1cm}
+      \item (e fornecem informações úteis para \tred{depuração})\vspace{0.1cm}
+      \item e várias pessoas \tred{depuram em paralelo} \vspace{0.1cm}
+      \item alguém achará uma \tred{correção} para o bug
+      % Isso se aplica sob dois pontos de vista: dos usuários do sistema, que fornecerão bug reports possivelmente mais completos, e dos desenvolvedores do sistema, já que vários poderão tentar atacar um mesmo bug e, devido a essa redundância, algum provavelmente conseguirá descobrir a causa do problema e corrigi-lo.
+    \end{enumerate}
+ 	\end{block}
+\end{column}
+\end{columns}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Meritocracia}
+	\begin{block}{Quem você {\bf é} não importa}
+    \begin{enumerate}
+      \item mas {\bf o que} você fez\vspace{0.1cm}
+      \item e {\bf como} você fez. \vspace{0.1cm}
+      \item Levar para o lado pessoal é difícil se você \bred{nem conhece as pessoas}. \vspace{0.1cm}
+    \end{enumerate}
+ 	\end{block}
+\pause
+\vspace{0.4cm}
+	Quem faz mais e melhor, vira {\bf committer}!
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Ranking de \textit{committers} do Linux desde 2002}
+
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.35]{committers_linux.jpg}
+	%Número de commits por desenvolvedor do Linux, em ordem decrescente. Note que a quantidade 
+	%de commits do Linus duas vezes maior que o do segundo colocado (mais de 27000!).
+    %http://www.ohloh.net/p/linux/contributors
+	%Copyright pertence a Ohloh
+	%Ohloh grants you a royalty-free, fully paid-up, worldwide, non-transferable, non-exclusive, limited license to use, reproduce, modify and publicly display the "Ohloh Materials" ("Materials"?) on Ohloh's website in and/or on any of your online publications and/or web pages, provided that you agree to attribute Ohloh as the source of any "Materials".
+	
+	% Por sinal, esse sítio, Ohloh, é legal. Tem informações interessantes sobre 
+	% vários projetos populares, como o Linux, o Debian e o Mozilla Firefox. 
+	\end{center}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sem coerção (mas com alguma hierarquia)}
+    \begin{block}{Hierarquia baseada em mérito}
+    \begin{enumerate}
+      \item O {\bf \bgreen{criador}} do projeto é um caso especial\vspace{0.1cm}
+      \item \textit{Committers} e não-\textit{committers}\vspace{0.1cm}
+      \begin{itemize}
+         \item Às vezes há vários níveis de \textit{committers}
+      \end{itemize}
+    \end{enumerate}
+    \end{block}\pause
+
+    \begin{block}{``Norma sem sanção é como fogo que não queima''?} 
+    % Esse dito é atribuído a Rudolf von Jhering (http://en.wikipedia.org/wiki/Rudolf_von_Jhering)
+    \begin{enumerate}
+      \item Projetos \textit{open source} têm regras
+         \begin{itemize}
+         \item Como fazer que sejam seguidas?\vspace{0.1cm}
+         \end{itemize}
+         \pause
+      \item Ditador \tred{{\em benevolente}}?
+      % Em um projeto FLOSS, o ditador funciona muito mais como um mediador de
+      % conflitos do que como um ditador de fato. Como discutido a seguir, o 
+      % motivo para isso é a possibilidade sempre presente de se criar um fork. 
+      % Em outras palavras, o ditador não tem nenhum poder de coerção e não
+      % pode ser responsabilizado por manter a ordem e garantir que as regras
+      % sejam cumpridas. 
+      \begin{itemize}
+      \item Tem que ser, senão, enFORKa ele\vspace{0.1cm}
+      \end{itemize}
+      \pause
+      \item Reputação é {\bf tudo}
+      % De acordo com Eric Raymond em "Homesteading the Noosphere":
+      % ...Software is freely shared. This abundance creates a situation in which the 
+      % only available measure of competitive success is reputation among one's peers.
+         \begin{itemize}
+         \item E as regras costumam ser pragmáticas
+         % Como consequência desse pragmatismo, não seguir as regras tem efeitos 
+         % negativos práticos e observáveis nos outros participantes do projeto. 
+         % Logo, não seguir as regras pode colocar em cheque a competência de um
+         % participante, o que pode arranhar sua reputação. Como reputação é tudo,
+         % desvios das regras são evitados a todo custo. 
+         \end{itemize}
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\section{Forks}
+\subsection{Forks}
+
+
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Forks}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Fork Off! (ou Fork You!)}
+	\begin{columns}
+	\begin{column}[c]{1.5cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.9 ]{fork.jpg}\\
+    % http://en.wikipedia.org/wiki/File:Forks_Susa_Louvre_MAO421-422-431.jpg
+    % Domínio público.
+    % Description: Bronze forks made in Iran during the 8th or 9th century.
+	\end{center}
+	%No início, 
+	\end{figure}
+	\end{column}
+	\begin{column}[c]{7.0cm}
+	\begin{itemize}
+	\item Um \textit{fork} é um projeto de FLOSS iniciado como uma {\bf cópia exata} de um outro. 
+  	  \begin{itemize} 
+	  \item E que \byellow{evolui separadamente}, via de regra\vspace{0.1cm}
+	  \item Com outro nome
+	  \end{itemize}\pause
+	\item Devido a razões
+	  \begin{itemize}
+	  \item técnicas
+	  \item pessoais
+	  \item políticas
+	  \item de qualquer natureza
+	  \end{itemize}
+	\end{itemize}
+    \end{column}
+    \end{columns}%\pause
+%    {\small \bred{O que é chamado de ``fork'' no Github não é necessariamente o que chamamos de \textit{fork}!}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A importância da \textit{fork}abilidade}
+ {\large
+  \begin{itemize}
+  	\item \textit{Forks} são a \tred{cola fundamental} de um projeto de FLOSS
+      \begin{itemize}
+	  \item Mantém a balança de poder\vspace{0.1cm}
+	  \item {\bf \tred{Toda}} licença de FLOSS permite a criação de \textit{forks}
+	  \end{itemize}\vspace{0.4cm}
+\pause
+	  \item Democratizam ditaduras
+        \begin{itemize}
+        \item Poder é {\bf dado} ao ``ditador''
+	    \end{itemize}\vspace{0.4cm}
+	  \item Reduzem as vantagens de fechar o código
+        \begin{itemize}
+        \item Quando uma corporação compra uma outra
+	    \end{itemize}
+	  
+	  % Segundo Karl Fogel: 
+	  % Forks, or rather the potential for forks, are the reason there are no true 
+	  % dictators in free software projects. This may seem like a surprising claim, 
+	  % considering how common it is to hear someone called the "dictator" or "tyrant" 
+	  % in a given open source project. But this kind of tyranny is special, quite 
+	  % different from the conventional understanding of the word. Imagine a king 
+	  % whose subjects could copy his entire kingdom at any time and move to the 
+	  % copy to rule as they see fit. Would not such a king govern very differently 
+	  % from one whose subjects were bound to stay under his rule no matter what he 
+	  % did?
+	  %
+	  % Extraído do Capítulo 4 de "Producing Open Source Software". O livro inteiro 
+	  % está disponível em http://producingoss.com/en/producingoss.html#social-infrastructure.
+	  % A reprodução é permitida. (Licença Creative Commons Attribution-ShareAlike License 3.0).
+  \end{itemize}
+  }
+\end{frame}
+
+\begin{frame}
+	\frametitle{Alguns \textit{forks} famosos}
+    
+%    Bella e Edward em Forks. :)
+    \begin{itemize}
+    \item LibreOffice (\byellow{OpenOffice})\vspace{0.2cm}\pause
+    % Motivo: medo de que a Oracle fechasse o projeto, impusesse restrições ou simplesmente 
+    % o abandonasse. Posteriormente, a Oracle simplesmente entregou o projeto para a Apache, 
+    % que o rebatizou de Apache OpenOffice.
+    \item EGCS -- Enhanced/Experimental GNU Compiler System (\byellow{GCC})\vspace{0.2cm}\pause
+    % EGCS = The Enhanced/Experimental GNU Compiler System
+    % Motivo: devido à grande popularidade do GCC, a FSF tornou-se muito preocupada com a 
+    % estabilidade do mesmo, o que significava que a inclusão de novas funcionalidades tornou-se
+    % menos prioritária e mais cuidadosa, para evitar prejudicar essa estabilidade. Alguns
+    % desenvolvedores, ansiosos por introduzir melhorias no tronco do código do compilador, 
+    % várias delas já implementadas ao longo dos anos, resolveram criar o EGCS em 1997, que 
+    % inicialmente servia para experimentar com novas funcionalidades ainda não consideradas 
+    % maduras o suficiente para entrar no GCC. Dizer que o EGCS é um fork não é inteiramente 
+    % preciso. Na verdade, ele é o resultado da integração de diversos forks do GCC. Em 1999 
+    % tornou-se o GCC oficial. O GCC até então era desenvolvido em um estilo "Catedral". A 
+    % partir daí, passou a empregar a abordagem "Bazar", já usada no desenvolvimento do EGCS.
+    
+    \item Apache HTTPd (\byellow{NCSA HTTPd})\vspace{0.2cm}\pause
+    % Motivo: O desenvolvimento do NCSA HTTPd ia muito lento na segunda metade da década de 90. Um
+    % grupo de desenvolvedores pegou o código do servidor e criou um fork, o Apache HTTPd. 
+    % Hoje em dia, o Apache não inclui mais código originalmente do NCSA HTTPd.  
+        
+    \item Drizzle (\byellow{MySQL})\vspace{0.2cm}\pause
+    % Motivo: A Oracle, com a compra da Sun, tornou-se dona do banco de dados comercial mais usado
+    % no mundo e do banco de dados livre mais usado no mundo. Alguns desenvolvedores consideraram
+    % essa situação menos que ideal e criaram um fork. 
+    
+    \item GNU IceCat (\byellow{Mozilla Firefox}) \vspace{0.2cm}\pause
+    % Rebranding do Firefox, mas mantido atualizado junto à base de código principal. A Mozilla
+    % exigiu que o browser usado no Debian mudasse de nome. Foi criado então o IceCat. Vale
+    % ressaltar que o código do IceCat aproveita todas as funcionalidades e melhorias aplicadas
+    % ao Firefox, mas inclui código adicional. 
+    %Mais informações: http://en.wikipedia.org/wiki/List_of_software_forks
+
+    \item FreeBSD (\byellow{386BSD}), NetBSD (\byellow{386BSD}), OpenBSD (\byellow{NetBSD})
+
+    %\item WebKit (KHTML)
+
+    %\item XEmacs (Emacs)
+    \end{itemize}
+    
+\end{frame}
+
+\section{Tabus}
+\subsection{Tabus}
+
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Tabus}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{You Shall not Fork! (unless you have to)}
+	
+	\begin{columns}
+  	  \begin{column}[c]{2.5cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.45]{gandalf.jpg}\\
+    % http://29.media.tumblr.com/tumblr_kycryhwP7S1qapxx6o1_500.jpg
+    % Autor: Jeff Rooks
+    % Não consegui encontrar informações de copyright. Logo, suponho que
+    % pertença ao autor. Não dá para saber se é permitido republicar o trabalho, 
+    % logo, não republicá-lo-ei. 
+    % Vale ressaltar que eu cortei fora os lados da imagem para fazê-la ficar boa no slide.
+	\end{center}
+	\end{figure}
+	  \end{column}
+	  \pause
+	  \begin{column}[c]{6.5cm}
+	  \textit{Forks} são, em geral, evitados porque\vspace{0.1cm}
+	  \begin{itemize}
+	  \item dividem a base de usuários\vspace{0.1cm}
+	  \item dividem a base de desenvolvedores\vspace{0.1cm}
+	  \item podem prejudicar reputações\vspace{0.1cm}
+	    \begin{itemize}
+	    \item de desenvolvedores e do projeto 
+	    % Por que podem prejudicar a reputação do projeto? 
+	    % De acordo com ESR: Forking projects is bad because it exposes pre-fork contributors to a reputation 
+	    % risk they can only control by being active in both child projects simultaneously after the fork. 
+	    % (This would generally be too confusing or difficult to be practical.)
+	    \end{itemize}
+	  \end{itemize}
+	  \end{column}
+	\end{columns}
+\end{frame}	
+
+
+\begin{frame}
+	\frametitle{Não use seu santo nome em vão}
+
+	\begin{columns}
+  	  \begin{column}[c]{3.0cm}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.55]{moises.jpg}\\
+	  % http://en.wikipedia.org/wiki/File:Moses041.jpg
+	  % Licença: Domínio público
+	  % Moisés e as tábuas com os dez mandamentos.
+	\end{center}
+	\end{figure}
+
+	  \end{column}
+	  \pause
+	  \begin{column}[c]{6.5cm}
+	  Versões modificadas e \textit{patches} não devem ser distribuídos sem conhecimento dos donos do projeto\vspace{0.2cm}
+	  \begin{itemize}
+	  \item Podem danificar a reputação do projeto\vspace{0.2cm}
+	  \item Alguns se protegem contra isso através de licenças \vspace{0.1cm}
+	    \begin{itemize}
+	    \item Ex. Mozilla Public License 
+	    \end{itemize}
+	  \end{itemize}
+	  \end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A César o que é de César}
+	
+	\begin{columns}
+  	  \begin{column}[c]{2.5cm}
+	  \begin{figure}
+  	  \begin{center}
+   	  \includegraphics[scale=1.3]{caesar.jpg}\\
+	  % http://en.wikipedia.org/wiki/File:Giulio-cesare-enhanced_1-800x1450.jpg
+	  % Bust of Caesar from the Naples National Archaeological Museum.
+	  % Licença: domínio público.
+	  \end{center}
+	  \end{figure}
+	  \end{column}
+	  \pause
+	  \begin{column}[c]{6.5cm}
+	  \textbf{{\em\tred{NUNCA}}} se remove o nome de uma pessoa ...\vspace{0.2cm}
+	    \begin{enumerate} 
+	    \item do histórico, 
+	    \item dos créditos ou 
+	    \item da lista de mantenedores do projeto\vspace{0.2cm}
+        \end{enumerate}
+	  \begin{itemize}   \pause
+      \item Em uma meritocracia, não reconhecer o mérito é o maior crime\vspace{0.2cm}
+      \item A pessoa ser ``difícil'' não é um motivo
+	  \end{itemize}
+	  \end{column}
+	\end{columns}
+\end{frame}
+
+
+\section{Modelos de Gerenciamento}
+\subsection{Modelos de Gerenciamento}
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Modelos de Gerenciamento para Projetos FLOSS}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Antes, uma palavrinha sobre terminologia...}
+	\begin{block}{Projeto}
+	\begin{quote}
+	``A project is a temporary endeavor with a defined beginning and end (\textbf{usually time-constrained, and often constrained by funding or deliverables}), undertaken to meet unique goals and objectives [...].''
+	\end{quote}
+	% Definição retirada da Wikipédia (http://en.wikipedia.org/wiki/Project_management)
+	% A página da Wikipédia sobre ``Project'' refere-se a projetos de Engenharia, Ciência e Tecnologia (escolas e universidades),
+	% projetos conforme definidos pela área de Gerenciamento de Projetos. Em todos os casos, um projeto tem duração finita. 
+	% A atividade ``do dia-a-dia'' de uma empresa, que não tem um fim, é chamada de operação.
+    \begin{itemize}\pause
+    \item \textbf{Estritamente}, um ``projeto'' FLOSS não é um projeto
+    % Talvez possa ser visto como um conjunto de projetos.
+    \end{itemize}
+    \end{block}
+\pause
+	\begin{block}{Gerenciamento de projetos}
+	Responsabilidades de um gerente de projeto: 
+	\begin{itemize}
+	\item Definição de objetivos (viáveis e claros) para o projeto
+    \item Gerenciamento de recursos 
+    \item \textbf{\tred{Construção}} dos requisitos do projeto
+    % Se usarmos o termo ``construção'', acho que essa definição não é ideal para descrever as atividades do gerente de
+    % um projeto FLOSS. Também não sei se ``elicitação'' e ``priorização'' são bons. O termo ``priorização'' me parece
+    % o mais preciso.  
+    %Da Wikipedia: ``A project manager is the person responsible for accomplishing the stated project objectives.'' Key project management responsibilities include creating clear and attainable project objectives, building the project requirements, and managing the constraints of the project management triangle, which are cost, time, scope, and quality''.
+    % http://en.wikipedia.org/wiki/Project_manager#Overview
+	\end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Quem é este?}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.35]{guido.jpg}\\[0.1cm]
+	%Guido van Rossum, criador da linguagem Python.
+	%http://en.wikipedia.org/wiki/File:Guido_van_Rossum_OSCON_2006.jpg
+	%Foto por Doc Searls.
+	%Licença: This file is licensed under the Creative Commons Attribution-Share Alike 2.0 Generic
+	\vspace{0.2cm}
+	\pause
+	\byellow{Guido van Rossum, criador e \textbf{BDFL} da linguagem Python}
+	\end{center}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Ditador benevolente (BD)}
+	\begin{block}{O que é?}
+    \begin{itemize}
+    \item Autoridade final na tomada de decisões\vspace{0.1cm}
+    \item Um \tred{juiz} \textbf{aprovado pela comunidade}\vspace{0.1cm}
+    \item Muitas vezes é o fundador do projeto
+    % É possível perceber que, da mesma forma que um ``projeto'' de FLOSS não é um projeto estritamente
+    % falando, o BD também não é um gerente de projeto, embora haja atribuições comuns. 
+    \end{itemize}
+    \end{block}
+\pause
+	\begin{block}{Quem pode ser?}
+    \begin{itemize}
+    \item Desenvolvedor experiente\vspace{0.1cm}
+      \begin{itemize}
+      \item Não necessariamente o melhor \textit{hacker}
+      \end{itemize}
+    \item {\em Principal habilidade}: reconhecer \bred{boas soluções de projeto}\vspace{0.1cm}
+    \item Via de regra, é óbvio quem {\bf deve} ser o BD   
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Alguns projetos FLOSS com BDs}
+    \begin{itemize}
+    \item {\bf Linux}\vspace{0.2cm}
+    % Linux Torvalds
+    \item {\bf Python}\vspace{0.2cm}
+    % Guido Van Rossum
+    \item {\bf Perl}\vspace{0.2cm}
+    % Larry Wall
+    \item Clojure\vspace{0.2cm}
+    % Rich Hickey
+    \item Ubuntu\vspace{0.2cm}
+    % Mark Richard Shuttleworth
+    \item VIm
+    %Bram Moolenaar
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Democracia baseada em consenso (com ou sem comitê)}
+	\begin{block}{Funcionamento básico}
+    \begin{itemize}
+    \item Decisão a ser tomada é apresentada publicamente\vspace{0.1cm}
+    \item Se não houver objeções, consenso é atingido\vspace{0.1cm}
+    % No Apache HTTPD, há um comitê chamado Apache HTTP Project Management Committee (PMC, for short). Esse comitê é
+    % quem faz as votações. Para que qualquer 
+    % patch seja committed, é necessário que haja três votos a favor de membros do PMC e nenhum contra. Mais informações
+    % no endereço http://httpd.apache.org/ABOUT_APACHE.html
+    \item Decisão pode ser implementada\vspace{0.1cm}
+    % ``implementada'' em um sentido mais amplo. Não precisa ser uma decisão diretamente
+    % ligada ao código. 
+    \end{itemize}
+    \end{block}
+\pause
+	\begin{block}{Complementarmente}
+    \begin{itemize}
+    \item Algumas decisões podem ser tomadas sem discussão\vspace{0.1cm}
+      \begin{itemize}
+      \item Por exemplo, a decisão de corrigir um \textit{bug}
+      \end{itemize}
+    \item Consequências podem ser {\bf desfeitas}\vspace{0.1cm}
+    % A possibilidade de desfazer as consequências de uma má decisão, possível graças ao
+    % sistema de controle de versões, agiliza o processo de tomada de decisão e evita
+    % que muito tempo seja gasto propondo publicamente cursos de ação óbvios e antecipando 
+    % todas as formas como uma decisão pode não ser boa.
+    \item Se consenso não for atingido, é necessário \byellow{votar}  
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Como gerenciamento de versões simplifica consenso}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.33]{bugfix.jpg}
+	% Image criada por mim. Pode ser distribuída com a mesma licença que este documento.
+	
+	% A imagem mostra uma situação onde o consenso foi atingido sem a necessidade de uma 
+	% discussão pública. Um dos desenvolvedores corrigiu um bug no Glasgow Haskell compiler
+	% e fez o commit no repositório. Além disso, o desenvolvedor indicou que essa correção 
+	% deveria ser incluída na próxima versão do compilador, 7.4.3, mudando o estado do bug
+	% report para ``merge''. Entretanto, um outro desenvolvedor respondeu dizendo que essa 
+	% correção não funcionou corretamente com o branch da versão 7.4 e que, por ser um
+	% problema pequeno, poderia ser deixada para depois. Ele então mudou o estado do bug
+	% report para ``closed'' (para indicar que a correção não deve ser combinada com a 
+	% versão 7.4.3) e estabeleceu um milestone para a versão 7.6.1, o que significa que espera-
+	% se que, nessa versão futura, o problema esteja corrigido.
+	\end{center}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Votação}
+	\begin{block}{Quem pode votar?}
+    \begin{itemize}\pause
+    \item Nem todo mundo\vspace{0.1cm} \pause 
+    \item Resposta fácil: \textit{committers}\vspace{0.1cm}\pause
+    \item Às vezes apenas um subconjunto.
+    % É o casos projetos da Apache Software Foundation e seus PMCs.
+    \end{itemize}
+    \end{block}
+\pause
+	\begin{block}{Complicações}
+    \begin{itemize}
+    \item \textit{Committers} parciais\vspace{0.1cm}
+    % ``In projects that offer both full and partial commit access, the question of whether partial committers can vote largely depends on the process by which partial commit access is granted. If the project hands it out liberally, for example as a way of maintaining many third-party contributed tools in the repository, then it should be made clear that partial commit access is really just about committing, not voting.''. Capítulo 4 de Producing Open Source Software, de Karl Fogel. Licença: Creative Commons Attribution-ShareAlike 3.0 Unported.
+      \begin{itemize}
+      \item \textit{committing} == \textit{voting}?
+      \end{itemize}
+    \item Vetos\vspace{0.1cm}
+    % Um veto é uma objeção forte contra uma decisão. Funciona como uma maneira de protelar uma votação para que mais discussão sobre
+    % um determinado tópico aconteça. É feito por uma pessoa com poder de votar. O impacto de um veto varia de projeto para projeto.
+    % Desenvolvedores devem usar vetos de maneira parcimoniosa. O veto não é um mecanismo para que desenvolvedores atrapalhem
+    % votações para tentar impor sua visão de qual curso de ação de ser tomado. 
+    \end{itemize}
+    \end{block}
+    \vspace{0.2cm}\pause
+    Projetos maduros definem \textbf{diretrizes} para várias questões, incluindo votações
+    % Dois exemplos de documentos com recomendações para desenvolvedores:
+    % Surversion: http://subversion.apache.org/docs/community-guide/
+    % Apache Software Foundation: http://www.apache.org/foundation/how-it-works.html e http://www.apache.org/foundation/voting.html 
+\end{frame}
+
+\section{Ferramentas}
+\subsection{Ferramentas}
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Ferramentas}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Um projeto FLOSS emprega várias ferramentas}
+    \begin{block}{Para resolver os seguintes problemas}
+    \begin{itemize}
+    \item {\bf Comunicação} \vspace{0.2cm}
+    \item {\bf Gestão do conhecimento} \vspace{0.2cm}
+    \item {\bf Programação}, testes e depuração \vspace{0.2cm}
+    \item {\bf Controle} sobre os artefatos produzidos \vspace{0.2cm}
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+
+\section{Criando um Projeto}
+\subsection{Criando um Projeto}
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{\textit{Checklist} para Novo Projetos}
+\end{center}
+\end{frame}
+
+% A checklist foi extraída a partir do Capítulo 2 do livro "Producing Open Source Software", de Karl Fogel.
+\begin{frame}
+	\frametitle{Para começar um novo projeto}
+    \begin{itemize}
+    \item Escolha um nome \vspace{0.1cm}
+    \item Defina objetivos de longo prazo\vspace{0.1cm}
+    \item Deixe claro que o projeto é livre\vspace{0.1cm}
+    % Sobre o ponto acima, um estudo interessante é este: 
+    % http://www.theregister.co.uk/2013/04/18/github_licensing_study/
+    % Em resumo, como a maior parte dos projetos não deixa claro qual é a licença, esses projetos não são, 
+    % legalmente falando, de código aberto. 
+    \item Elenque os requisitos e funcionalidades\vspace{0.1cm}
+    \item Torne o programa baixável em formato fonte \vspace{0.1cm}
+    \item Estabeleça acesso a controle de versões e rastreador de bugs\vspace{0.1cm}
+      % Vários sítios podem ser usados para este fim. Atualmente, o Github é bastante
+      % popular por combinar repositório com controle de versões baseado no Git, bug
+      % tracking e rede social em um só sítio. 
+    \item Estabeleça canais de comunicação (lista, canal de IRC)\vspace{0.1cm}
+    % De forma geral, meios para que pessoas possam se comunicar e cooperar.
+    \item Escolha a licença\vspace{0.1cm}
+    \item \textbf{Anuncie}!
+    % Em http://www.freecode.com
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+	%\frametitle{www.freecode.com}
+	\begin{figure}
+	\begin{center}
+ 	\includegraphics[scale=0.33]{freecode.jpg}
+	\end{center}
+	% Freecode.com é uma marca registrada da GeekNet, Inc. Todos os direitos reservados.
+	% O copyright dos anúncios feitos no sítio pertence aos anunciantes e não é de 
+	% responsabilidade de GeekNet, Inc. 
+	% A imagem foi feita por mim e não constitui uma violação de copyright já que não mostra
+	% nenhum logotipo registrado. Vale ressaltar, porém, que GeekNet, Inc. permite o uso de
+	% seus logotipos dentro das condições estabelecidas no seu Termo de Uso (http://geek.net/trademark-usage). 
+	\end{figure}
+    % Cada anúncio no Freecode inclui, além do nome do projeto, uma breve descrição sobre o sistema, um 
+    % pedaço de suas release notes, um screen shot opcional, a licença de distribuição, palavras-chave
+    % opcionais e link para a homepage. É possível seguir o projeto para obter novas informações
+    % sobre ele à medida que tornam-se disponíveis.  
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{À medida que o projeto evoluir}
+    \begin{itemize}
+    \item Crie listas separadas para discussões distintas\vspace{0.1cm}
+    \item Crie uma página Web
+    \begin{itemize}
+        \item Com exemplos e \textit{screenshots}     \vspace{0.1cm}
+    \end{itemize}
+    % Embora pareça óbvio que um projeto precisa ter uma página (com um domínio) desde o início, não é
+    % o caso. O www.kernel.org, por exemplo, só apareceu em 1997, alguns anos depois do surgimento do
+    % Linux. Basta olhar vários projetos novos. Eles até podem ter uma página, mas muitas vezes é quase
+    % só isso e usando a infra-estrutura oferecida por um sítio de hosting enlatado. 
+    \item Indique a situação atual de desenvolvimento (no início, estável, maduro, etc.)\vspace{0.1cm}
+    \item Documente as diretrizes de desenvolvimento\vspace{0.1cm}
+    \item Produza documentação para usuários e desenvolvedores
+    \end{itemize}
+\end{frame}
+
+
+%Setting the Tone
+%Avoid Private Discussions
+%Nip Rudeness in the Bud
+%Practice Conspicuous Code Review
+
+%When Opening a Formerly Closed Project, be Sensitive to the Magnitude of the Change
+
+%Announcing
+
+
+
+
+
+
+\section{Fim}
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Obrigado!}
+\end{center}
+\end{frame}
+
+\end{document}

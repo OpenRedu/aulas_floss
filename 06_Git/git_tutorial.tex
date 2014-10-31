@@ -1,0 +1,838 @@
+% Author: Fernando Castor. You can contact the author at castor in the cin.ufpe.br domain. 
+
+%THIS WORK IS LICENSED UNDER A CREATIVE COMMONS ATTRIBUTION-NONCOMMERCIAL-SHAREALIKE 3.0 UNPORTED LICENSE. THE WORK (AS DEFINED BY THE LICENSE) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
+%
+%BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
+%PLEASE REFER TO THE DESCRIPTION OF THE LICENSE (http://creativecommons.org/licenses/by-nc-sa/3.0/) AND TO ITS FULL TEXT (http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode) FOR MORE INFORMATION.
+
+% THIS WORK USES A NUMBER OF IMAGES FROM THIRD-PARTIES. THE COPYRIGHT OF THESE IMAGES REMAIN WITH THEIR OWNERS. 
+
+% Build this file with pdflatex
+\documentclass[xcolor=dvipsnames]{beamer}
+\usecolortheme[named=Brown]{structure} 
+%\usetheme{Rochester}
+\usetheme{Frankfurt}
+
+\usepackage{booktabs}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage[latin1]{inputenc}   % para os acentos
+\usepackage[brazil]{babel}      % para hifeniza\c{c}\~{a}o
+\usepackage{color}
+
+%\usepackage[english]{babel}
+%\usepackage[utf8]{inputenc}
+
+\definecolor{lightgrey}{rgb}{0.8, 0.8, 0.8}
+\newcommand{\shd}[1]{\colorbox{lightgrey}{#1}}
+
+\newcommand{\tblue}[1]{\textcolor{blue}{#1}}
+\newcommand{\tred}[1]{\textcolor{red}{#1}}
+\newcommand{\tgreen}[1]{\textcolor{green}{#1}}
+\newcommand{\tyellow}[1]{\textcolor{yellow}{#1}}
+
+
+\newcommand{\byellow}[1]{\colorbox{yellow}{#1}}
+\newcommand{\bred}[1]{\colorbox{red}{\textcolor{white}{#1}}}
+\newcommand{\bgreen}[1]{\colorbox{green}{#1}}
+
+\definecolor{lightestgrey}{rgb}{0.91, 0.91, 0.91}
+\newcommand{\lshd}[1]{\colorbox{lightestgrey}{#1}}
+
+\title{Git -- Um Sistema de Controle de Versões Distribuído}
+\author{Fernando Castor}
+\pgfdeclareimage[height=0.4cm]{cc}{license}
+
+\institute{Centro de Informática -- Universidade Federal de Pernambuco \\[2.0cm] {\tiny Alguns direitos reservados }\pgfuseimage{cc} }
+\date{}
+\pgfdeclareimage[height=1.0cm]{logo}{ines}
+\pgfdeclareimage[height=0.8cm]{logo2}{spg}
+\pgfdeclareimage[height=0.8cm]{logo3}{cin}
+
+\logo{\pgfuseimage{logo3}\hspace{0.1cm}\pgfuseimage{logo}\hspace{0.1cm}\pgfuseimage{logo2} }
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Índice}
+\subsection{Índice}
+
+\begin{frame}
+	\frametitle{Índice}
+	
+    \begin{enumerate}
+    \item Um pouco de história \vspace{0.2cm}
+    \item Controle de versões distribuído \vspace{0.2cm}
+    \item Usando o Git \vspace{0.2cm}
+    \item Github e Gitorious \vspace{0.2cm}
+    \item Exercícios
+    \end{enumerate}
+
+\end{frame}
+
+
+\section{História}
+\subsection{História}
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Um pouco de história}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Quem é este?}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.6]{lbt.jpg}\\
+	\end{figure}
+\pause
+Linus B. Torvalds
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Contexto}
+	\begin{block}{Algumas informações sobre o Linux}
+		  \begin{itemize}
+		    \item 9516 {\em committers}
+		    \item Até 11000 {\em commits} por mês
+		    \item Quase 25 milhões de linhas de código
+		    \item Mais informações: \tred{http://www.ohloh.net/p/linux/}
+		  \end{itemize}
+	\end{block}
+
+\pause
+
+	\begin{block}{Linux e SCVs}
+		  \begin{itemize}
+		    \item Até 2002: \bred{nenhum} (apenas \textit{patches})
+		    \item Entre 2002 e 2005: BitKeeper
+		      \begin{itemize}
+		      \item Sistema comercial (mas gratuito)
+		      \end{itemize}
+		    \item A partir de 2005: Git
+		      \begin{itemize}
+		      \item Devido a problemas com o proprietário do BitKeeper
+		      % Da Wikipedia: http://en.wikipedia.org/wiki/Git_(software)
+		      % The copyright holder of BitKeeper, Larry McVoy, had withdrawn free use of the product after 
+		      % he claimed that Andrew Tridgell had reverse-engineered the BitKeeper protocols.
+		      \end{itemize}		    
+		  \end{itemize}
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Objetivos de projeto do Git}
+	      {\bf Em resumo}: Deveria ser o \textbf{\bgreen{SCV do Linux}}\vspace{0.3cm}\pause
+	      \begin{block}{Mais especificamente}
+		  \begin{enumerate}
+		    \item Ser \tred{diferente do CVS} (e do SVN!)\vspace{0.2cm}
+		    \item Suporte a controle de versões \tred{distribuído}\vspace{0.2cm}
+		    \item Salvaguardas \tred{contra corrupção} de repositórios\vspace{0.2cm}
+		    \item \textbf{\tred{Excelente}} desempenho
+		  \end{enumerate}	
+		  \end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Git hoje}
+\begin{columns}
+	\begin{column}[c]{6.5cm}
+	      \begin{enumerate}
+		    \item Mantido por \byellow{Junio Hamano}\vspace{0.1cm}
+		    \item Disponível para várias plataformas\vspace{0.1cm}
+		    \item Atualmente na versão 1.8.4\vspace{0.1cm}
+		    % Em 19/4/2012
+		    \item Já é um dos SCVs mais usados\vspace{0.1cm}
+		    \item Vários sítios de \textit{hosting} dão suporte ao Git
+		      \begin{itemize}
+		      \item Alguns lembram redes sociais
+		      \end{itemize}
+		  \end{enumerate}	
+    \end{column}
+    \begin{column}[c]{4cm}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.3]{jh.jpg}
+	% Junio Hamano
+	\end{figure}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\section{SCVs Distribuídos}
+\subsection{SCVs Distribuídos}
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Controle de Versões Distribuídos}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{SCV local}
+\begin{columns}
+\begin{column}[c]{5.0cm}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.25]{scv_local.jpg}
+	% Ilustração fortemente baseada na que aparece na página 3 do livro ProGit, de Scott Chacon 
+	\end{figure}
+\end{center}
+\end{column}
+\pause
+\begin{column}[c]{4.5cm}
+\begin{block}{Características de SCVs locais}
+\begin{itemize}
+\item[\bgreen{+}] Possibilidade de recriar qualquer versão\vspace{0.2cm}
+\item[\bgreen{+}] Forma organizada de fazer backups\vspace{0.2cm}
+\item[\bred{--}] Colaboração é difícil
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{SCV com repositório centralizado}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.22]{scv_cent.jpg}
+	% Ilustração fortemente baseada na que aparece na página 4 do livro ProGit, de Scott Chacon 
+	\end{figure}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{SCV com repositório centralizado}
+\begin{block}{Vantagens}
+\begin{itemize}
+\item[\bgreen{+}] Possibilidade de colaboração\vspace{0.1cm}
+\item[\bgreen{+}] Todos podem saber o que os outros fazem\vspace{0.1cm}
+\item[\bgreen{+}] Administradores têm controle sobre permissões
+\end{itemize}
+\end{block}
+\pause
+\begin{block}{Desvantagens}
+\begin{itemize}
+\item[\bred{--}] Ponto único de falha\vspace{0.1cm}
+\item[\bred{--}] Conexão com o servidor é necessária\vspace{0.1cm}
+\item[\bred{--}] Gargalo de desempenho
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{SCV distribuído}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.20]{scv_dist.jpg}
+	% Ilustração fortemente baseada na que aparece na página 5 do livro ProGit, de Scott Chacon 
+	\end{figure}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{SCV distribuído}
+\begin{block}{Vantagens}
+\begin{itemize}
+\item[\bgreen{+}] Todas as vantagens de um SCV local ou com repositório centralizado
+\item[\bgreen{+}] Menos vulnerabilidade a corrupção de dados
+\item[\bgreen{+}] Excelente desempenho
+\item[\bgreen{+}] Possibilidades diversas de fluxos de trabalho
+\end{itemize}
+\end{block}
+\pause
+\begin{block}{Desvantagens}
+\begin{itemize}
+\item[\bred{--}] Maior complexidade do modelo conceitual
+\item[\bred{--}] Clonar um repositório é um pouco mais lento que fazer um checkout
+% No caso do Git, consumo de espaço em disco pode ser um problema também, já que cópias
+% completas dos arquivos são mantidas. Isso não tem a ver com o fato do Git ser distribuído,
+% porém, e não necessariamente ocorre na prática, já que muitos dos arquivos são bem
+% pequenos e o overhead de registrar apenas as diferenças pode ser grande demais.
+\end{itemize}
+\end{block}
+\pause
+\vspace{0.2cm}
+\byellow{Mais informações: http://pt.whygitisbetterthanx.com/}
+\end{frame}
+
+\section{Git Básico}
+\subsection{Git Básico}
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{O Sistema Git}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Armazenamento de versões no Git}
+
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.65]{deltas.jpg}\\
+	{\footnotesize Versões armazenadas como deltas}
+    % Autor: Scott Chacon
+    	% Esta ilustração aparece na página 6 do livro ProGit, de Scott Chacon 
+	\end{figure}
+	\vspace{0.2cm}
+	\pause
+	\begin{figure}
+	\includegraphics[scale=0.65]{copies.jpg}\\
+	{\footnotesize Versões armazenadas como cópias}
+    % Autor: Scott Chacon
+    	% Esta ilustração aparece na página 6 do livro ProGit, de Scott Chacon 
+	\end{figure}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Os três principais locais}
+	No Git, quase tudo pode ser feito \bgreen{localmente} \pause
+\begin{columns}
+\begin{column}[c]{4cm}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.25]{data_flow_basic.png}
+    % Autor: http://commons.wikimedia.org/wiki/User:Cmglee
+    % Endereço da original: http://en.wikipedia.org/wiki/File:Git_data_flow_simplified.svg
+    % Licença: Creative Commons Attribution-Share Alike 3.0 Unported
+    % Não tenho certeza de que é possível adicionar a restrição de não
+    % permitir usos comerciais, mas assim o fiz. 
+	\end{figure}
+	{\tiny http://en.wikipedia.org/wiki/File:Git\_data\_flow\_simplified.svg}
+\end{center}
+\end{column}
+\begin{column}[c]{6.5cm}
+\pause
+\begin{block}{Um fluxo de trabalho}
+\begin{enumerate}
+\item \textbf{add} inclui no índice arquivos {\bf \tred{modificados}} da {\bf área de trabalho} 
+  \begin{itemize}
+  \item os arquivos estão {\bf \tred{staged}}
+  % Se um arquivo em algum momento esteve staged e não foi explicitamente removido, ele 
+  % também é tracked pelo repositório. Isso significa que o Git não irá ignorá-lo e que
+  % modificações a ele serão notadas (embora ele só se torne staged novamente caso 
+  % o comando git add seja utilizado de novo). 
+  \item arquivos {\bf \tred{não-modificados}} não são incluídos
+  % Se um arquivo está staged, isso significa que ele está registrado no índice e pronto
+  % para ser confirmado no repositório. 
+  \end{itemize}
+\pause
+\item \textbf{commit} inclui no {\bf repositório} itens que estão no {\bf índice}
+  \begin{itemize}
+  \item os arquivos estão {\bf \tred{confirmados}}
+  \end{itemize}
+\pause
+\item \textbf{checkout} faz duas coisas:
+  \begin{itemize}
+  \item Seleciona um outro \textit{branch} 
+  \item Atualiza a área de trabalho com os arquivos do \textit{branch} selecionado
+  \end{itemize}
+\end{enumerate}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Ops! Os \textbf{quatro} principais locais}
+	No Git, quase tudo pode ser feito \bgreen{localmente}\\[0.2cm] \pause
+	Às vezes, porém, tem que ser \bred{remoto}
+\begin{columns}
+\begin{column}[c]{4cm}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.25]{data_flow.png}
+    % Autor: http://commons.wikimedia.org/wiki/User:Cmglee
+    % Endereço da original: http://en.wikipedia.org/wiki/File:Git_data_flow_simplified.svg
+    % Licença: Creative Commons Attribution-Share Alike 3.0 Unported
+    % Não tenho certeza de que é possível adicionar a restrição de não
+    % permitir usos comerciais, mas assim o fiz. 
+	\end{figure}
+	{\tiny http://en.wikipedia.org/wiki/File:Git\_data\_flow\_simplified.svg}
+\end{center}
+\end{column}
+\begin{column}[c]{6.5cm}
+\pause
+\begin{block}{Um outro fluxo de trabalho}
+\begin{enumerate}
+\item \textbf{push} envia modificações para o {\bf repositório remoto}
+  \begin{itemize}
+  \item para os \textit{branches} especificados 
+  \end{itemize}
+\pause
+\item \textbf{fetch} atualiza o repositório local a partir de um remoto
+  \begin{itemize}
+  \item sem atualizar a area de trabalho
+  \end{itemize}
+\pause
+\item \textbf{pull} é similar a {\tt fetch}, mas atualiza a área de trabalho
+\end{enumerate}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+
+
+%------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+\begin{frame}
+	\frametitle{Pedindo ajuda}
+\begin{block}{}
+\texttt{\$ git\\
+usage: ....
+\\[0.4cm]
+The most commonly used git commands are:...\\
+~~~~add~~~~~~~~~~Add file contents to the index\\
+...
+}
+\\\texttt{\$ git help add}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Configurações básicas}
+Comando {\tt config}
+\begin{block}{}
+\begin{itemize}
+\item três locais para guardar configurações:\vspace{0.2cm}
+  \begin{itemize}
+  \item repositório\vspace{0.2cm} 
+  \item seu diretório de usuário (opção {\tt --global})\vspace{0.2cm}
+  \item sistema inteiro (opção {\tt --system})
+  \end{itemize}
+\end{itemize}
+\vspace{0.1cm}
+{\tt 
+\$ git config user.name ``Fernando Castor''\\
+\$ git config user.email ``castor@cin.ufpe.br''
+}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Criando um novo projeto}
+Comando {\tt init}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\$ pwd\\
+/Users/fernando/scm\\
+\$ ls -1\\
+01\_conceitos\_scm.ppt\\
+02\_padroes\_scm.ppt\\
+03\_controle\_versoes.ppt\\
+04\_gerencia\_mudancas.ppt\\
+readme.txt\\
+\$ git init \\
+Initialized empty Git repository in /Users/fernando/scm/.git/
+}}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examinando a situação atual}
+Comando {\tt status}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\$ git status\\
+\# On branch master\\
+\#\\
+\# Initial commit\\
+\#\\
+\# Untracked files:\\
+\# ~~(use "git add $<$file$>$..."~to include in what will be committed)\\
+\#\\
+\# ~~01\_conceitos\_scm.ppt\\
+\# ~~02\_padroes\_scm.ppt\\
+\# ~~03\_controle\_versoes.ppt\\
+\# ~~04\_gerencia\_mudancas.ppt\\
+\# ~~readme.txt\\
+
+nothing added to commit but untracked files present (use "git add" to track)
+}}
+\end{block}
+\pause
+Notem o \texttt{`use "git add"...'} 
+% Isso significa que os arquivos não estão staged ainda. Eles não estão no índice e, 
+% consequentemente, não serão incluídos no repositório. É necessário usar o comando 
+% git add para passar a "rastrear" o arquivo. Rastrear significa que  ...
+\end{frame}
+
+\begin{frame}
+	\frametitle{Rastreando arquivos}
+Comando {\tt add}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\$ git add readme.txt\\
+\$ git status\\
+\# On branch master\\
+\#\\
+\# Initial commit\\
+\#\\
+\# Changes to be committed:\\
+\# ~~(use "git rm --cached $<$file$>$..."~to unstage)\\
+% a opção cached para o comando rm faz com que os arquivos sejam removidos
+% apenas do índice e não do repositório. 
+\#\\
+\# ~~new file:   readme.txt\\
+\#\\
+\# Untracked files:\\
+\# ~~(use "git add $<$file$>$..."~to include in what will be committed)\\
+\#\\
+\# ~~01\_conceitos\_scm.ppt\\
+...nothing added to commit but untracked files present (use "git add" to track)
+}}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Fazendo \textit{commit} para o repositório}
+Comando {\tt commit}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\$ git commit -m "Arquivo de instruções."\\
+~~1 files changed, 1 insertions(+), 0 deletions(-)\\
+~~create mode 100644 readme.txt\\[0.3cm]
+}
+\byellow{(modificamos um pouco mais o arquivo {\tt readme.txt})}\\[0.3cm]
+{\tt 
+\$ git commit -m "O novo readme.txt."\\
+{[}master 24167e8{]} O novo readme.txt.\\
+~~1 files changed, 4 insertions(+), 1 deletions(-)
+}
+}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Histórico de \textit{commits}}
+Comando {\tt log}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\$ git log \tred{--stat}\\
+commit \byellow{24167e85de618bf9240cf14b51e13195b2218a14}\\
+Author: Fernando Castor <castor@cin.ufpe.br>\\
+Date:   Tue Apr 24 17:31:35 2012 -0300
+\\[0.3cm]
+~~~~~~O novo readme.txt.
+\\[0.3cm]
+\tred{~~readme.txt |~~~~~5 ++++-}\\
+\tred{~~1 files changed, 4 insertions(+), 1 deletions(-)}
+\\[0.3cm]
+commit \byellow{67fd964ad19b9a59d531f2bd6e12419c2ff189e1}\\
+Author: Fernando Castor <castor@cin.ufpe.br>\\
+Date:   Tue Apr 24 17:21:08 2012 -0300
+\\[0.3cm]
+~~~~~~Arquivo de instruções.
+\\[0.3cm]
+\tred{~~readme.txt |~~~~~1 +}\\
+\tred{~~1 files changed, 1 insertions(+), 0 deletions(-)}
+}
+}
+
+\end{block}
+%Em amarelo, os identificadores dos \textit{commits}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Verificando diferenças entre arquivos}
+Comando {\tt diff}
+\begin{block}{}
+{\scriptsize
+\byellow{(modificamos um pouco mais o arquivo {\tt readme.txt})}\\[0.3cm]
+{\tt 
+\$ git diff\\
+diff --git a/readme.txt b/readme.txt\\
+index 44c8c80..012e742 100644\\
+\tred{---} a/readme.txt\\
+\tblue{+++} b/readme.txt\\
+@@ \tred{-1,4} \tblue{+1,7} @@\\
+ This is now so much more than a readme file. It is something\\
+\tred{-}altogether different.  I know, this is still a readme file. However,\\
+...\\
+\tblue{+}altogether different.  I know, this is still a readme file.  It does\\
+...
+ }
+}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Ainda verificando diferenças entre arquivos}
+\begin{block}{}
+\byellow{(continuando do slide anterior)}\\[0.3cm]
+{\tt 
+\$ git add readme.txt\\
+\$ git diff\\
+\$ \\
+\$ git diff \tred{--cached}\\
+index 44c8c80..012e742 100644\\
+--- a/readme.txt\\
++++ b/readme.txt\\
+@@ -1,4 +1,7 @@\\
+...
+}
+\end{block}
+%A opção {\tt --cached} verifica diferenças entre o que está staged e o que está no repositório
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Criando \textit{branches}}
+Comando {\tt branch}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\$ \tblue{git branch} b1\\
+\$ \tblue{git branch}\\
+~ b1 \\
+\tred{*} master
+}
+}
+\end{block}
+\pause
+\begin{block}{}
+{\scriptsize
+{\tt 
+\byellow{(cria-se um arquivo {\tt apenasNoBranchMaster.txt})}\\[0.3cm]
+\$ ls -1 \\
+...\\
+04\_gerencia\_mudancas.ppt\\
+\tred{apenasNoBranchMaster.txt}\\
+readme.txt\\
+\pause
+\$ \tblue{git checkout} b1 \\
+\$ ls -1 \\
+...\\
+04\_gerencia\_mudancas.ppt\\
+readme.txt\\
+}
+}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Combinando alterações em \textit{branches}}
+Comando {\tt merge}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\byellow{(depois de fazer alterações em {\tt readme.txt} nos dois {\em branches})}\\[0.3cm]
+\$ git checkout master\\
+\$ \tblue{git merge} b1\\
+Auto-merging readme.txt\\
+\tred{CONFLICT} (content): Merge conflict in readme.txt\\
+Automatic merge failed; fix conflicts and then commit the result.}\\
+}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Como conflitos são representados em arquivos texto}
+\begin{block}{}
+{\scriptsize
+{\tt 
+\tred{<<<<<<< HEAD}\\
+altogether different.  I know, this is still a readme file.  It does\\
+not have many of the features of a readme file, though.  In fact, I\\
+find it lacking in almost any aspect I can think of.  However, it has\\
+become my example file to show the student the amazing capabilities of\\
+Git. So, I'll use it anyway.\\[0.3cm]
+
+\tred{=======}\\
+altogether different.  I know, this is still a readme file. Nonetheless,\\
+it has become my example file to show the student the amazing\\
+Just inserting a line her to make things more complex.\\
+capabilities of Git.\\
+I think I understand what can make conflicts occur.\\
+\tred{>>>>>>> b1}
+}
+}
+\end{block}
+\pause
+Depois de resolver os conflitos, é só usar {\tt add} e {\tt commit}.
+\pause
+\\[0.3cm]
+\bred{Para ver melhor o histórico, use a ferramenta {\tt gitk}}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Clonando um repositório remoto}
+
+Comando {\tt clone}
+\begin{block}{}
+{\scriptsize
+{\tt 
+git clone protocolo://endereco/caminho/repositorio.git
+}\pause
+\\[0.3cm]
+Por exemplo:
+\\[0.3cm]
+{\tt 
+git clone git://github.com/curso-scm/scm.git
+}
+ou
+\\[0.3cm]
+{\tt 
+git clone https://github.com/curso-scm/scm.git
+}}
+\end{block}
+\pause
+\begin{itemize}
+\item Não funciona como em SCVs com repositório centralizado
+\item A princípio, não há um repositório mais importante
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Enviando arquivos atualizados para um repositório remoto}
+
+Comando {\tt push}
+\begin{block}{}
+{\tt 
+git push https://github.com/curso-scm/scm.git master
+}
+
+\end{block}
+\pause
+O segundo parâmetro pode ser
+\begin{itemize}
+\item Omitido.
+\item Um arquivo (ou vários)
+\item Um branch
+\item A chave SHA1 de um objeto
+\item Entre outras coisas...
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Trazendo objetos para repositório local}
+
+Comando {\tt pull}
+\begin{block}{}
+{\tt 
+git pull https://github.com/curso-scm/scm.git master
+}
+
+\end{block}
+\pause
+O segundo parâmetro pode ser
+\begin{itemize}
+\item Omitido.
+\item Um arquivo (ou vários)
+\item Um branch
+\item A chave SHA1 de um objeto
+\item Entre outras coisas...
+\end{itemize}
+\pause\vspace{0.2cm}
+O comando {\tt fetch} pode ser usado também
+\begin{itemize}
+\item Não realiza {\tt merge}.
+\end{itemize}
+\end{frame}
+
+\section{Github e Gitorious}
+\subsection{Github e Gitorious}
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Hospedagem centrada em Git: Github e Gitorious}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{\textit{Hospedagem} gratuita de projetos}
+\begin{block}{O que é?}
+\begin{itemize}
+\item Serviço oferecido por alguns sítios
+  \begin{itemize}
+  \item Exemplos: SourceForge, GoogleCode, Codeplex. 
+  \end{itemize}
+\item Mantém os arquivos acessíveis remotamente em um repositório
+\item Em geral, dão suporte a várias ferramentas
+\end{itemize}
+\end{block}
+\pause
+\begin{block}{Hospedagem centrada no Git}
+\begin{itemize}
+\item Dois exemplos mais conhecidos:
+  \begin{itemize}
+  \item GitHub e Gitorious. 
+  \end{itemize}
+\item Lembram redes sociais
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{GitHub}
+\begin{block}{Funcionalidades}
+\begin{itemize}
+\item Criação e manutenção de vários repositórios \tred{públicos}\vspace{0.1cm}
+\item Registro de diversas estatísticas de uso\vspace{0.1cm}
+\item Possibilidade de ``seguir'' outros desenvolvedores
+\end{itemize}
+\end{block}
+\vspace{0.5cm}
+\begin{center}
+	\begin{figure}
+	\includegraphics[scale=0.4]{github_logo_social_coding_outlined.png}
+	\end{figure}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{}
+  \begin{center}
+  \begin{figure}
+	\includegraphics[scale=0.39]{tela_git.jpg}
+  \end{figure}
+  \end{center}
+\end{frame}
+
+\section{Fim}
+\subsection{Fim}
+
+
+\begin{frame}
+\vspace{0.2cm}
+\begin{center}
+\Huge{Obrigado!}
+\end{center}
+\end{frame}
+
+
+\end{document}
